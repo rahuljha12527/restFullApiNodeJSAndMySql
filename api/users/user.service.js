@@ -63,7 +63,7 @@ module.exports = {
           callback(error);
         }
 
-        return callback(null,results[0]);
+        return callback(null,results);
       }
     )
   },
@@ -79,5 +79,19 @@ module.exports = {
          return callBack(null,results[0]);
        }
      )
-   } 
+   } ,
+
+   getUserByUserEmail:(email,callBack)=>{
+     pool.query(
+       `select * from registration where emailId=?`,
+       [email],
+       (error,results,fields)=>{
+         if(error){
+           callBack(error);
+         }
+
+         return callBack(null,results);
+       }
+     )
+   }
 };
