@@ -33,7 +33,7 @@ module.exports = {
 
         return callBack(null,results);
       }
-    )
+    );
   },
   getUserByUserId:(id,callBack)=>{
     pool.query(
@@ -41,7 +41,7 @@ module.exports = {
       [id],
       (error,results,fields)=>{
         if(error){
-          callBack(error);
+         return  callBack(error);
         }
         return callBack(null,results[0]);
       }
