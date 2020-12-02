@@ -25,3 +25,8 @@ module.exports={
 
     }
 }
+
+
+// Go with this link.
+
+//http://www.expertphp.in/article/user-login-and-registration-using-nodejs-and-mysql-with-example

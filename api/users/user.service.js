@@ -4,15 +4,14 @@ module.exports = {
   create: (data, callBack) => {
     pool.query(
       `insert into registration(emailId,password,firstName,lastName,StoryName)
-                  values()`,
+                  values(?,?,?,?,?)`,
 
       [
-        data.first_name,
-        data.last_name,
         data.emailId,
         data.password,
+        data.firstName,
+        data.lastName,
         data.StoryName,
-        data.number,
       ],
       (error, results, fields) => {
         if (error) {
@@ -24,5 +23,3 @@ module.exports = {
     );
   },
 };
-
-
