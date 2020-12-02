@@ -8,6 +8,7 @@ const {
 } = require("./user.service");
 
 const { genSaltSync, hashSync,compareSync } = require("bcrypt");
+const bcrypt=require("bcrypt");
 const {sign}=require("jsonwebtoken");
 
 
@@ -105,10 +106,11 @@ module.exports = {
   },
   login:(req,res)=>{
       const body=req.body;
+     // console.log(req)
       getUserByUserEmail(body.email,(err,results)=>{
           if(err){
-              console.log(err);
-          }
+         console.log(err);
+        }
           if(!results){
               return res.json({
                   success:0,
@@ -116,8 +118,11 @@ module.exports = {
               });
 
           }
-
-          const result=compareSync(body.password,results.password);
+       //   const salt = genSaltSync(10);
+         // const resu=hashSync(body.password,salt);
+          
+          const result=bcrypt.compareSync(body.password,results.password);
+          console.log(result);
           if(result){
                results.password=undefined;
                const jsontoken=sign({result:results},"que1234",{
