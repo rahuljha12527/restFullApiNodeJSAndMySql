@@ -36,7 +36,7 @@ module.exports = {
               return;
           }
 
-          if(!result){
+          if(!results){
               return res.json({
                   success:0,
                   message:"Record not found"
