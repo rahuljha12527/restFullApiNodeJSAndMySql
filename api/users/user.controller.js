@@ -8,7 +8,7 @@ const {
 } = require("./user.service");
 
 const { genSaltSync, hashSync,compareSync } = require("bcrypt");
-const bcrypt=require("bcrypt");
+//const bcrypt=require("bcrypt");
 const {sign}=require("jsonwebtoken");
 
 
@@ -102,47 +102,43 @@ module.exports = {
 
         return callBack(null, results[0]);
       }
-    );
+    );  
   },
-  login:(req,res)=>{
-      const body=req.body;
-     // console.log(req)
-      getUserByUserEmail(body.email,(err,results)=>{
-          if(err){
-         console.log(err);
-        }
-          if(!results){
-              return res.json({
-                  success:0,
-                  data:"Invalid email or password"
-              });
-
-          }
-       //   const salt = genSaltSync(10);
-         // const resu=hashSync(body.password,salt);
-          
-          const result=bcrypt.compareSync(body.password,results.password);
-          console.log(result);
-          if(result){
-               results.password=undefined;
-               const jsontoken=sign({result:results},"que1234",{
-                   expiresIn:"1h"
-               });
-
-               return res.json({
-                   success:1,
-                   message:"login Successfully",
-                   token:jsontoken
-               });
-
-          }else{
-              return res.json({
-                  success:0,
-                  data:"Invalid email or password"
-              });
-          }
-      });
-  }
-
+  login: (req, res) => {
+    const body = req.body;
+    console.log("bodyEMail",body);
+    getUserByUserEmail(body.emailId, (err, results) => {
+      console.log("bodyEMail",body.emailId);
+      if (err) {
+        console.log(err);
+      }
+      console.log("results",results);
+      if (!results) {       
+        return res.json({
+          success: 0,
+          data: "Invalid email or password"
+        });
+      }
+      console.log("resultPassword",results.password,body.password);
+      const result = compareSync(body.password, results.password);
+       console.log("results",result);
+      if (!result) {
+        results.password = undefined;
+        const jsontoken = sign({ result: results }, "qwe1234", {
+          expiresIn: "1h"
+        });
+        return res.json({
+          success: 1,
+          message: "login successfully",
+          token: jsontoken
+        });
+      } else {
+        return res.json({
+          success: 0,
+          data: "Invalid email or password"
+        });
+      }
+    });
+  },
 };
 

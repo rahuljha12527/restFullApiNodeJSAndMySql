@@ -24,7 +24,7 @@ module.exports = {
   },
   getUsers:callBack=>{
     pool.query(
-      `select id,firstName,lastName,emailId,StoryName from registration`,
+      `select password,id,firstName,lastName,emailId,StoryName from registration`,
       [],
       (error,results,fields)=>{
         if(error){
@@ -63,7 +63,7 @@ module.exports = {
           callback(error);
         }
 
-        return callback(null,results);
+        return callback(null,results[0  ]);
       }
     )
   },
@@ -81,17 +81,18 @@ module.exports = {
      )
    } ,
 
-   getUserByUserEmail:(email,callBack)=>{
-     pool.query(
-       `select * from registration where emailId=?`,
-       [email],
-       (error,results,fields)=>{
-         if(error){
-           callBack(error);
-         }
-
-         return callBack(null,results);
-       }
-     )
-   }
+   getUserByUserEmail: (email, callBack) => {
+    console.log("email",email);
+    pool.query(
+      `select * from registration where emailId = ?`,
+      [email],
+    
+      (error, results, fields) => {
+        if (error) {
+          callBack(error);
+        }
+        return callBack(null, results[0]);
+      }
+    );
+  }
 };
